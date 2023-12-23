@@ -9,6 +9,11 @@ public record MovieSearchQuery : ISearchOrder
     public int Limit { get; init; }
     public int Page { get; init; }
     public string? SortBy { get; init; }
-    public QueryOrderByEnum? OrderBy => SortBy?.Substring(0, 1) == "-" ? QueryOrderByEnum.Descending : QueryOrderByEnum.Ascending;
-    public string? Field => SortBy?.Substring(1); 
+    public QueryOrderByEnum? OrderBy => SortBy?[..1] switch 
+    {
+        "-" => QueryOrderByEnum.Descending,
+        "+" => QueryOrderByEnum.Ascending,
+        _ => null!
+    }
+    public string? Field => SortBy?[1..]; 
 }
