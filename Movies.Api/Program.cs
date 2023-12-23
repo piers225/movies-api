@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Movies.DataAccess;
 using Movies.DataAccess.Services;
 using Movies.DataAccess.Services.Models;

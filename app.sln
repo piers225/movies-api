@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.DataAccess", "Movies
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Api", "Movies.Api\Movies.Api.csproj", "{3530FA70-A293-4FD2-B801-D7196D895228}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.DataAccess.Test", "Movies.DataAccess.Test\Movies.DataAccess.Test.csproj", "{4842702F-66D1-4001-8DE3-64A78517B7B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.DataAccess.Tests", "Movies.DataAccess.Tests\Movies.DataAccess.Tests.csproj", "{4842702F-66D1-4001-8DE3-64A78517B7B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
