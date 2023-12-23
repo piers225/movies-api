@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+    movies-api:
+      build: 
+        context: .
+        dockerfile: DockerFile
+      ports:
+        - "5179:5179"
+        - "3000:3000"
+      volumes:
+        - ../:/app
+      environment:
+        - TZ=UTC
+      tty: true

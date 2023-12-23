@@ -1,0 +1,29 @@
+{
+    "name": "movies-api",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "movies-api",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csharp", 
+                "fudge.auto-using",
+                "formulahendry.dotnet-test-explorer",
+                "josefpihrt-vscode.roslynator",
+                "dbaeumer.vscode-eslint", 
+                "esbenp.prettier-vscode",
+                "streetsidesoftware.code-spell-checker",
+                "PKief.material-icon-theme",
+                "ms-dotnettools.csdevkit"
+            ],
+            "settings": {
+                "files.eol": "\r\n",
+                "remote.extensionKind": {
+                    "ms-azuretools.vscode-docker": "workspace"
+                }
+            }
+        }
+    }
+}
