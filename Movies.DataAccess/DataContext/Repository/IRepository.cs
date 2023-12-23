@@ -1,6 +1,4 @@
-using System.Linq.Expressions;
-
-namespace Movies.DataAccess.Repository;
+namespace Movies.DataAccess.DataContext.Repository;
 
 internal interface IRepository<TEntity> 
     where TEntity : class, new()

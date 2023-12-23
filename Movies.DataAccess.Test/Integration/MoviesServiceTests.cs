@@ -28,7 +28,10 @@ public class MoviesServiceTest
     [Test]
     public async Task Test() 
     {
-        var query = new MovieSearchQuery("Batman", null!);
+        var query = new MovieSearchQuery() {
+            Page = 1,
+            Title = "Batman"
+        };
 
         var results = await moviesService.SearchMovies(query);
 

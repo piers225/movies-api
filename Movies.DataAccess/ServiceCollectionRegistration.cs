@@ -1,4 +1,4 @@
-using Movies.DataAccess.Repository;
+using Movies.DataAccess.DataContext.Repository;
 using Movies.DataAccess.DataContext;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using Movies.DataAccess.DataContext;
-using Movies.DataAccess.Repository;
+using Movies.DataAccess.DataContext.Repository;
+using Movies.DataAccess.Extensions;
 using Movies.DataAccess.Services.Models;
 
 namespace Movies.DataAccess.Services;
@@ -30,7 +31,7 @@ internal class MoviesService : IMoviesService
         }
 
         return await query
-            .Take(100)
+            .Paginate(movieSearchQuery.Page, movieSearchQuery.Limit)
             .Select(movie => new MovieQueryResult(movie.Id, movie.Title))
             .ToArrayAsync();
     }
