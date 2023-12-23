@@ -17,7 +17,7 @@ internal class MoviesService : IMoviesService
         this.movieRepository = movieRepository;
     }
 
-    private Expression<Func<Movie, dynamic>> GetSortExpression(SearchOrder searchOrder)
+    private Expression<Func<Movie, dynamic>> GetSortExpression(ISearchOrder searchOrder)
     {
         return searchOrder.Field switch
         {
@@ -43,7 +43,7 @@ internal class MoviesService : IMoviesService
 
         if (movieSearchQuery.SortBy is not null) 
         {
-            query = query.Sort(movieSearchQuery.SortBy, GetSortExpression(movieSearchQuery.SortBy));
+            query = query.Sort(movieSearchQuery, GetSortExpression(movieSearchQuery));
         }
         
         return await query

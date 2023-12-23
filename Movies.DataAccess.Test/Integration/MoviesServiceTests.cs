@@ -30,11 +30,9 @@ public class MoviesServiceTest
     {
         var query = new MovieSearchQuery {
             Page = 1,
+            Limit = 200,
             Title = "Batman",
-            OrderBy = new SearchOrder {
-                OrderBy = Movies.DataAccess.Services.Enum.QueryOrderByEnum.Ascending,
-                Field = "Title"
-            }
+            SortBy = "+Title"
         };
 
         var results = await moviesService.SearchMovies(query);

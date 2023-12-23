@@ -16,7 +16,7 @@ internal static class IQueryableExtensions
         return query.Skip(skip).Take(pageSize);
     }
 
-    internal static IQueryable<TSource> Sort<TSource, TKey>(this IQueryable<TSource> query, SearchOrder searchOrder, Expression<Func<TSource, TKey>> keySelector) 
+    internal static IQueryable<TSource> Sort<TSource, TKey>(this IQueryable<TSource> query, ISearchOrder searchOrder, Expression<Func<TSource, TKey>> keySelector) 
     {
         if (searchOrder.OrderBy == Services.Enum.QueryOrderByEnum.Ascending) 
         {

@@ -1,8 +1,8 @@
 using Movies.DataAccess.Services.Enum;
 
 namespace Movies.DataAccess.Services.Models;
-public record SearchOrder
+public interface ISearchOrder
 {
-    public QueryOrderByEnum OrderBy { get; init; }
-    public string? Field { get; init; }
+    public QueryOrderByEnum? OrderBy { get; }
+    public string? Field { get; }
 }
