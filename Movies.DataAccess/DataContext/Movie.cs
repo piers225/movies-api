@@ -1,7 +1,7 @@
 namespace Movies.DataAccess.DataContext;
-using System.ComponentModel.DataAnnotations;
 internal class Movie
 {
+    public int Id { get; set; }
     public DateTime ReleaseDate { get; set; }
     public string Title { get; set; } = default!;
     public string Overview { get; set; } = default!;

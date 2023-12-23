@@ -2,16 +2,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Movies.DataAccess.DataContext;
 
-internal class MoviesDataContext : DbContext
+internal class MoviesDataContext(DbContextOptions<MoviesDataContext> options) : DbContext(options)
 {
-    public MoviesDataContext(DbContextOptions<MoviesDataContext> options)
-        : base(options)
-    { }
-    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Genre> Genres { get; set; } = null!;
 
-    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Movie> Movies { get; set; } = null!;
 
-    public DbSet<MovieGenreLink> MovieGenreLinks { get; set; }
+    public DbSet<MovieGenreLink> MovieGenreLinks { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
