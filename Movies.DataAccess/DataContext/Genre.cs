@@ -9,5 +9,5 @@ internal class Genre
     [Column("Genre")]
     public string GenreName { get; set; } = default!;
 
-    public required ICollection<MovieGenreLink> MoviesGenresLinks { get; set; } = default!;
+    public required ICollection<MoviesGenresLink> MoviesGenresLinks { get; set; } = default!;
 }

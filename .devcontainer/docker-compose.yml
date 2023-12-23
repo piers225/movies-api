@@ -6,7 +6,7 @@ services:
         context: .
         dockerfile: DockerFile
       ports:
-        - "5179:5179"
+        - "5001:5001"
         - "3000:3000"
       volumes:
         - ../:/app

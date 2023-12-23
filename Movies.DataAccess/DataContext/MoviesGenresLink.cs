@@ -1,6 +1,6 @@
 namespace Movies.DataAccess.DataContext;
 
-internal class MovieGenreLink 
+internal class MoviesGenresLink 
 {
     public Movie Movie { get; set; } = default!;
 

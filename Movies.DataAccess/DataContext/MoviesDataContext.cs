@@ -8,11 +8,11 @@ internal class MoviesDataContext(DbContextOptions<MoviesDataContext> options) : 
 
     public DbSet<Movie> Movies { get; set; } = null!;
 
-    public DbSet<MovieGenreLink> MovieGenreLinks { get; set; } = null!;
+    public DbSet<MoviesGenresLink> MoviesGenresLink { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
-       modelBuilder.Entity<MovieGenreLink>()
+       modelBuilder.Entity<MoviesGenresLink>()
            .HasKey(link => new { link.MovieId, link.GenreId });
    }
 }

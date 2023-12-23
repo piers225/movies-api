@@ -43,11 +43,12 @@ internal class MoviesService : IMoviesService
 
         if (movieSearchQuery.SortBy is not null) 
         {
+            Console.WriteLine(movieSearchQuery.OrderBy);
             query = query.Sort(movieSearchQuery, GetSortExpression(movieSearchQuery));
         }
         
         return await query
-            .Paginate(movieSearchQuery.Page, movieSearchQuery.Limit)
+            .Paginate(movieSearchQuery.PageOrDefault, movieSearchQuery.LimitOrDefault)
             .Select(movie => new MovieQueryResult(movie.Id, movie.Title, movie.PosterUrl))
             .ToArrayAsync();
     }

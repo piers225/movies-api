@@ -10,5 +10,5 @@ internal class Movie
     public decimal VoteAverage { get; set; }
     public string OriginalLanguage { get; set; } = default!;
     public string PosterUrl { get; set; }  = default!;
-    public ICollection<MovieGenreLink> MoviesGenresLinks { get; set; } = default!;
+    public ICollection<MoviesGenresLink> MoviesGenresLinks { get; set; } = default!;
 }
