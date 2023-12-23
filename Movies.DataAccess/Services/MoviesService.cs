@@ -43,7 +43,6 @@ internal class MoviesService : IMoviesService
 
         if (movieSearchQuery.SortBy is not null) 
         {
-            Console.WriteLine(movieSearchQuery.OrderBy);
             query = query.Sort(movieSearchQuery, GetSortExpression(movieSearchQuery));
         }
         
