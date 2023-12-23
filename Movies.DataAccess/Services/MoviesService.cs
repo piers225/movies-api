@@ -41,14 +41,14 @@ internal class MoviesService : IMoviesService
             query = query.Where(movie => movie.MoviesGenresLinks.Any(link => link.Genre.GenreName == movieSearchQuery.Genre));
         }
 
-        if (movieSearchQuery.OrderBy is not null) 
+        if (movieSearchQuery.SortBy is not null) 
         {
-            query = query.Sort(movieSearchQuery.OrderBy, GetSortExpression(movieSearchQuery.OrderBy));
+            query = query.Sort(movieSearchQuery.SortBy, GetSortExpression(movieSearchQuery.SortBy));
         }
         
         return await query
             .Paginate(movieSearchQuery.Page, movieSearchQuery.Limit)
-            .Select(movie => new MovieQueryResult(movie.Id, movie.Title))
+            .Select(movie => new MovieQueryResult(movie.Id, movie.Title, movie.PosterUrl))
             .ToArrayAsync();
     }
 }
