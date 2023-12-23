@@ -28,9 +28,13 @@ public class MoviesServiceTest
     [Test]
     public async Task Test() 
     {
-        var query = new MovieSearchQuery() {
+        var query = new MovieSearchQuery {
             Page = 1,
-            Title = "Batman"
+            Title = "Batman",
+            OrderBy = new SearchOrder {
+                OrderBy = Movies.DataAccess.Services.Enum.QueryOrderByEnum.Ascending,
+                Field = "Title"
+            }
         };
 
         var results = await moviesService.SearchMovies(query);

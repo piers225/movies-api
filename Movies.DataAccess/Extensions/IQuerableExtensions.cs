@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using Movies.DataAccess.Services.Models;
 
 namespace Movies.DataAccess.Extensions;
 
@@ -12,5 +14,14 @@ internal static class IQueryableExtensions
         int skip = (page - 1) * pageSize;
 
         return query.Skip(skip).Take(pageSize);
+    }
+
+    internal static IQueryable<TSource> Sort<TSource, TKey>(this IQueryable<TSource> query, SearchOrder searchOrder, Expression<Func<TSource, TKey>> keySelector) 
+    {
+        if (searchOrder.OrderBy == Services.Enum.QueryOrderByEnum.Ascending) 
+        {
+            return query.OrderBy(keySelector);
+        }
+        return query.OrderByDescending(keySelector);
     }
 }

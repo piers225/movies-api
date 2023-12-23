@@ -1,4 +1,5 @@
 
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Movies.DataAccess.DataContext;
 using Movies.DataAccess.DataContext.Repository;
@@ -16,6 +17,16 @@ internal class MoviesService : IMoviesService
         this.movieRepository = movieRepository;
     }
 
+    private Expression<Func<Movie, dynamic>> GetSortExpression(SearchOrder searchOrder)
+    {
+        return searchOrder.Field switch
+        {
+            "Title" => movie => movie.Title, 
+            "ReleaseDate" => movie => movie.ReleaseDate,
+            _ => throw new ArgumentException($"Invalid Sort Field: {searchOrder.Field}"),
+        };
+    }
+
     public async Task<MovieQueryResult[]> SearchMovies(MovieSearchQuery movieSearchQuery)
     {
         var query = movieRepository.GetQuery();
@@ -30,6 +41,11 @@ internal class MoviesService : IMoviesService
             query = query.Where(movie => movie.MoviesGenresLinks.Any(link => link.Genre.GenreName == movieSearchQuery.Genre));
         }
 
+        if (movieSearchQuery.OrderBy is not null) 
+        {
+            query = query.Sort(movieSearchQuery.OrderBy, GetSortExpression(movieSearchQuery.OrderBy));
+        }
+        
         return await query
             .Paginate(movieSearchQuery.Page, movieSearchQuery.Limit)
             .Select(movie => new MovieQueryResult(movie.Id, movie.Title))
