@@ -2,18 +2,13 @@ using Movies.DataAccess.Services.Enum;
 
 namespace Movies.DataAccess.Services.Models;
 
-public record MovieSearchQuery : ISearchOrder
+public record class MovieSearchQuery(string? Title, string? Genre, int? Limit, int? Page, string? SortBy) : ISearchOrder
 {
-    public string? Title { get; init; }
-    public string? Genre { get; init; }
-    public int? Limit { get; init; }
-    public int? Page { get; init; }
-    public string? SortBy { get; init; }
     public QueryOrderByEnum? OrderBy => SortBy?.Split(':')[1] switch 
     {
-        "asc" => QueryOrderByEnum.Descending,
-        "desc" => QueryOrderByEnum.Ascending,
-        _ => null!
+        "asc" => QueryOrderByEnum.Ascending,
+        "desc" => QueryOrderByEnum.Descending,
+        _ => QueryOrderByEnum.Ascending
     };
     public string? Field => SortBy?.Split(':')[0]; 
 

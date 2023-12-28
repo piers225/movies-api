@@ -19,11 +19,11 @@ internal class MoviesService : IMoviesService
 
     private Expression<Func<Movie, dynamic>> GetSortExpression(ISearchOrder searchOrder)
     {
-        return searchOrder.Field switch
+        return searchOrder.Field?.ToLower() switch
         {
-            "Title" => movie => movie.Title, 
-            "ReleaseDate" => movie => movie.ReleaseDate,
-            _ => throw new ArgumentException($"Invalid Sort Field: {searchOrder.Field}"),
+            "title" => movie => movie.Title, 
+            "releasedate" => movie => movie.ReleaseDate,
+            _ => movie => movie.Id
         };
     }
 
@@ -40,13 +40,9 @@ internal class MoviesService : IMoviesService
         {
             query = query.Where(movie => movie.MoviesGenresLinks.Any(link => link.Genre.GenreName == movieSearchQuery.Genre));
         }
-
-        if (movieSearchQuery.SortBy is not null) 
-        {
-            query = query.Sort(movieSearchQuery, GetSortExpression(movieSearchQuery));
-        }
         
         return await query
+            .Sort(movieSearchQuery, GetSortExpression(movieSearchQuery))
             .Paginate(movieSearchQuery.PageOrDefault, movieSearchQuery.LimitOrDefault)
             .Select(movie => new MovieQueryResult(movie.Id, movie.Title, movie.PosterUrl))
             .ToArrayAsync();

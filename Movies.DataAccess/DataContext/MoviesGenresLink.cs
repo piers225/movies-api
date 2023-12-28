@@ -2,9 +2,9 @@ namespace Movies.DataAccess.DataContext;
 
 internal class MoviesGenresLink 
 {
-    public Movie Movie { get; set; } = default!;
+    public Movie Movie { get; set; } = null!;
 
-    public Genre Genre { get; set; } = default!;
+    public Genre Genre { get; set; } = null!;
 
     public int MovieId { get; set; }
     

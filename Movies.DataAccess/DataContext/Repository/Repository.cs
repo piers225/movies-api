@@ -1,8 +1,3 @@
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using Microsoft.EntityFrameworkCore;
-using Movies.DataAccess.DataContext;
-
 namespace Movies.DataAccess.DataContext.Repository;
 
 internal class Repository<TEntity> : IRepository<TEntity> 

@@ -1,5 +1,3 @@
-
-
 using AutoFixture;
 using Microsoft.Extensions.DependencyInjection;
 using Movies.DataAccess;
@@ -9,6 +7,8 @@ using Movies.DataAccess.DataContext;
 using Movies.DataAccess.Services;
 using Movies.DataAccess.Services.Models;
 using Microsoft.EntityFrameworkCore;
+
+namespace Movies.DataAccess.Test.Integration;
 
 [TestFixture]
 public class MoviesServiceTest
@@ -65,25 +65,7 @@ public class MoviesServiceTest
     [Test]
     public async Task When_Title_Of_Man_Is_Queried_And_Order_By_Is_Set_To_Title_Asc_Then_We_Return_Superman_Then_Batman() 
     {
-        var query = new MovieSearchQuery {
-            Title = "man",
-            SortBy = "Title:asc"
-        };
-
-        var results = await moviesService.SearchMovies(query);
-
-        Assert.That(results.Length, Is.EqualTo(2));
-
-        CollectionAssert.AreEqual(results.Select(s => s.Id).ToArray(), new [] { 2, 1});
-    }
-
-    [Test]
-    public async Task When_Title_Of_Man_Is_Queried_And_Order_By_Is_Set_To_Title_Desc_Then_We_Return_Batman_Then_Superman() 
-    {
-        var query = new MovieSearchQuery {
-            Title = "man",
-            SortBy = "Title:desc"
-        };
+        var query = new MovieSearchQuery(Title : "man", Genre : null, Limit: null, Page : null, SortBy : "Title:asc");
 
         var results = await moviesService.SearchMovies(query);
 
@@ -93,17 +75,41 @@ public class MoviesServiceTest
     }
 
     [Test]
+    public async Task When_Title_Of_Man_Is_Queried_And_Order_By_Is_Set_To_Title_Desc_Then_We_Return_Batman_Then_Superman() 
+    {
+        var query = new MovieSearchQuery(Title : "man", null, Limit: null, Page : null, SortBy : "Title:desc");
+
+        var results = await moviesService.SearchMovies(query);
+
+        Assert.That(results.Length, Is.EqualTo(2));
+
+        CollectionAssert.AreEqual(results.Select(s => s.Id).ToArray(), new [] { 2, 1});
+    }
+
+    [Test]
     public async Task When_Genre_Adventure_Is_Queries_Then_Finding_Nemo_Is_Returned() 
     {
-        var query = new MovieSearchQuery {
-            Genre = "Adventure"
-        };
+        var query = new MovieSearchQuery(Title : null, Genre : "Adventure", Limit: null, Page : null, SortBy : null);
 
         var results = await moviesService.SearchMovies(query);
 
         Assert.That(results.Length, Is.EqualTo(1));
 
         CollectionAssert.AreEqual(results.Select(s => s.Id).ToArray(), new [] { 3 });
+    }
+
+    [Test]
+    public async Task When_No_Sort_Order_Is_Given_Items_Are_Sorted_and_Paged_By_Id() 
+    {
+        var query = new MovieSearchQuery(Title : null, Genre : null, Limit: 1, Page : null, SortBy : null);
+
+        var resultPage1 = await moviesService.SearchMovies(query);
+        var resultPage2 = await moviesService.SearchMovies(query with { Page = 2 });
+        var resultPage3 = await moviesService.SearchMovies(query with { Page = 3 });
+
+        CollectionAssert.AreEqual(resultPage1.Select(s => s.Id).ToArray(), new [] { 1 });
+        CollectionAssert.AreEqual(resultPage2.Select(s => s.Id).ToArray(), new [] { 2 });
+        CollectionAssert.AreEqual(resultPage3.Select(s => s.Id).ToArray(), new [] { 3 });
     }
 
 
