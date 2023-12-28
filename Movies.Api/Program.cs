@@ -23,13 +23,20 @@ else
     {
         errorApp.Run(async context =>
         {
+            var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+            var error = exceptionHandlerPathFeature?.Error;
+            var guid = Guid.NewGuid();
+            var message =  $"Unexpected Internal Server Error - {guid}";
+            logger.LogError(error, message);
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/html";
-            await context.Response.WriteAsync("Unexpected Internal Server Error");
+            await context.Response.WriteAsync(message);
         });
     });
     app.UseHttpsRedirection();
 }
+
 
 app.MapGet("/api/movies", (IMoviesService movieService, [AsParameters] MovieSearchQuery movieSearchQuery) =>  movieService.SearchMovies(movieSearchQuery));
 
