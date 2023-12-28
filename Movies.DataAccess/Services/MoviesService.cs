@@ -33,12 +33,12 @@ internal class MoviesService : IMoviesService
 
         if (movieSearchQuery.Title is not null) 
         {
-            query = query.Where(movie => movie.Title.Contains(movieSearchQuery.Title));
+            query = query.Where(movie => EF.Functions.Like(movie.Title, $"%{movieSearchQuery.Title}%"));
         }
 
         if (movieSearchQuery.Genre is not null) 
         {
-            query = query.Where(movie => movie.MoviesGenresLinks.Any(link => link.Genre.GenreName == movieSearchQuery.Genre));
+            query = query.Where(movie => movie.MoviesGenresLinks.Any(link => link.Genre.GenreName.ToUpper() == movieSearchQuery.Genre.ToUpper()));
         }
         
         return await query

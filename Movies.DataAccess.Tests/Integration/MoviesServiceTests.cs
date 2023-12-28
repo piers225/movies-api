@@ -127,5 +127,16 @@ public class MoviesServiceTest
         CollectionAssert.AreEqual(results, new [] { batman });
     }
 
+    [Test]
+    public async Task When_Title_Is_Lower_Case_batma_And_Genre_Is_Lower_Case_action_We_Return_Batman()
+    {
+        var query = new MovieSearchQuery(Title : "batma", Genre : "action", Limit: null, Page : null, SortBy : null);
+
+        var results = await moviesService.SearchMovies(query);
+
+        Assert.That(results.Length, Is.EqualTo(1));
+        CollectionAssert.AreEqual(results, new [] { batman });
+    }
+
 
 }
