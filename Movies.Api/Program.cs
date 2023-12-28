@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Movies.DataAccess;
 using Movies.DataAccess.Services;
 using Movies.DataAccess.Services.Models;
@@ -16,8 +17,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
+else 
+{
+    app.UseExceptionHandler(errorApp =>
+    {
+        errorApp.Run(async context =>
+        {
+            context.Response.StatusCode = 500;
+            context.Response.ContentType = "text/html";
+            await context.Response.WriteAsync("Unexpected Internal Server Error");
+        });
+    });
+    app.UseHttpsRedirection();
+}
 
 app.MapGet("/api/movies", (IMoviesService movieService, [AsParameters] MovieSearchQuery movieSearchQuery) =>  movieService.SearchMovies(movieSearchQuery));
 
