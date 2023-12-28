@@ -19,6 +19,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/movies", (IMoviesService movieService, [AsParameters] MovieSearchQuery movieSearchQuery) => movieService.SearchMovies(movieSearchQuery));
+app.MapGet("/api/movies", (IMoviesService movieService, [AsParameters] MovieSearchQuery movieSearchQuery) =>  movieService.SearchMovies(movieSearchQuery));
 
 app.Run();

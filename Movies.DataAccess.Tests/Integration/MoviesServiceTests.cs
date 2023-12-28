@@ -138,5 +138,15 @@ public class MoviesServiceTest
         CollectionAssert.AreEqual(results, new [] { batman });
     }
 
+    [Test]
+    public async Task When_Sort_Direction_Is_Missing_An_Order_We_Use_Ascending()
+    {
+        var query = new MovieSearchQuery(Title : null, Genre : null, Limit: 1, Page : null, SortBy : "Title");
+
+        var resultPage1 = await moviesService.SearchMovies(query);
+
+        CollectionAssert.AreEqual(resultPage1, new [] { batman });
+    }
+
 
 }

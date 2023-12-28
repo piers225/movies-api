@@ -23,7 +23,8 @@ internal class MoviesService : IMoviesService
         {
             "title" => movie => movie.Title, 
             "releasedate" => movie => movie.ReleaseDate,
-            _ => movie => movie.Id
+            null => movie => movie.Id,
+            var other => throw new ArgumentException($"Unknown sort field {other}")
         };
     }
 

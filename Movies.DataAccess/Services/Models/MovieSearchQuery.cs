@@ -1,14 +1,16 @@
 using Movies.DataAccess.Services.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace Movies.DataAccess.Services.Models;
 
 public record class MovieSearchQuery(string? Title, string? Genre, int? Limit, int? Page, string? SortBy) : ISearchOrder
 {
-    public QueryOrderByEnum? OrderBy => SortBy?.Split(':')[1] switch 
+    public QueryOrderByEnum? OrderBy => SortBy?.Split(':').ElementAtOrDefault(1) switch 
     {
         "asc" => QueryOrderByEnum.Ascending,
         "desc" => QueryOrderByEnum.Descending,
-        _ => QueryOrderByEnum.Ascending
+        null => QueryOrderByEnum.Ascending,
+        var other => throw new ArgumentException($"Unknown sort direction {other}")
     };
     public string? Field => SortBy?.Split(':')[0]; 
 
