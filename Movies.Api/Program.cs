@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.FileProviders;
 using Movies.DataAccess;
-using Movies.DataAccess.Services;
-using Movies.DataAccess.Services.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +10,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "../Movies.Client")),
+    RequestPath = ""
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -14,12 +14,12 @@ public class MoviesController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult SearchMovies([FromQuery] MovieSearchQuery movieSearchQuery)
+    public async Task<IActionResult> SearchMovies([FromQuery] MovieSearchQuery movieSearchQuery)
     {
         if (ModelState.IsValid == false) 
         {
             return BadRequest(ModelState);
         }
-        return Ok(_movieService.SearchMovies(movieSearchQuery));
+        return Ok(await _movieService.SearchMovies(movieSearchQuery));
     }
 }

@@ -45,7 +45,7 @@ internal class MoviesService : IMoviesService
         return await query
             .Sort(movieSearchQuery, GetSortExpression(movieSearchQuery))
             .Paginate(movieSearchQuery.PageOrDefault, movieSearchQuery.LimitOrDefault)
-            .Select(movie => new MovieQueryResult(movie.Id, movie.Title, movie.PosterUrl))
+            .Select(movie => new MovieQueryResult(movie.Id, movie.Title, movie.ReleaseDate, movie.PosterUrl))
             .ToArrayAsync();
     }
 }

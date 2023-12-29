@@ -10,7 +10,8 @@ public static class ServiceCollectionRegistration
 { 
     public static void Setup(IServiceCollection serviceCollection) 
     {
-        serviceCollection.AddDbContext<MoviesDataContext>(options => options.UseSqlite("Data Source=/app/Movies.DataAccess/Database/movies.db"));
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "../Movies.DataAccess/Database/movies.db");
+        serviceCollection.AddDbContext<MoviesDataContext>(options => options.UseSqlite($"Data Source=/{path}"));
         SetupServices(serviceCollection);
     }
 

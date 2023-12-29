@@ -14,9 +14,9 @@ public class MoviesServiceTest
 {
     private IMoviesService moviesService = null!;
 
-    private MovieQueryResult batman = new(1, "Batman", "");
-    private MovieQueryResult superman = new(2, "Superman", "");
-    private MovieQueryResult findingNemo = new(3, "Finding Nemo", "");
+    private MovieQueryResult batman = new(1, "Batman", new DateTime(2010, 10, 1), "");
+    private MovieQueryResult superman = new(2, "Superman", new DateTime(1970, 10, 1), "");
+    private MovieQueryResult findingNemo = new(3, "Finding Nemo", new DateTime(2003, 10, 1), "");
 
     [OneTimeSetUp]
     public void SetUp() 
@@ -41,21 +41,24 @@ public class MoviesServiceTest
             Id = 1,
             OriginalLanguage = "en",
             Overview = "",
-            PosterUrl = ""
+            PosterUrl = "",
+            ReleaseDate = new DateTime(2010, 10, 1)
         });
         context.Movies.Add(new Movie() { 
             Title = "Superman",
             Id = 2,
             OriginalLanguage = "en",
             Overview = "",
-            PosterUrl = ""
+            PosterUrl = "",
+            ReleaseDate = new DateTime(1971, 10, 1)
         });
         context.Movies.Add(new Movie() { 
             Title = "Finding Nemo",
             Id = 3,
             OriginalLanguage = "en",
             Overview = "",
-            PosterUrl = ""
+            PosterUrl = "",
+            ReleaseDate = new DateTime(2003, 10, 1)
         });
 
         context.MoviesGenresLink.Add(new MoviesGenresLink() { MovieId = 1, GenreId = 2});
@@ -102,7 +105,7 @@ public class MoviesServiceTest
     }
 
     [Test]
-    public async Task When_No_Sort_Order_Is_Given_Items_Are_Sorted_and_Paged_By_Id() 
+    public async Task When_No_Sort_Order_Is_Given_Items_Are_Sorted_and_Paged_By_Title() 
     {
         var query = new MovieSearchQuery(Title : null, Genre : null, Limit: 1, Page : null, SortField : null, SortDirection : null);
 
@@ -111,8 +114,8 @@ public class MoviesServiceTest
         var resultPage3 = await moviesService.SearchMovies(query with { Page = 3 });
 
         CollectionAssert.AreEqual(resultPage1, new [] { batman });
-        CollectionAssert.AreEqual(resultPage2, new [] { superman });
-        CollectionAssert.AreEqual(resultPage3, new [] { findingNemo });
+        CollectionAssert.AreEqual(resultPage3, new [] { superman });
+        CollectionAssert.AreEqual(resultPage2, new [] { findingNemo });
     }
 
     [Test]
