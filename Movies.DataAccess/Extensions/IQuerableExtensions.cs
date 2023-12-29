@@ -18,10 +18,10 @@ internal static class IQueryableExtensions
 
     internal static IOrderedQueryable<TSource> Sort<TSource, TKey>(this IQueryable<TSource> query, ISearchOrder searchOrder, Expression<Func<TSource, TKey>> keySelector) 
     {
-        if (searchOrder.OrderBy == Services.Enum.QueryOrderByEnum.Ascending) 
+        if (searchOrder?.SortDirection == Services.Enum.QueryOrderByEnum.Descending) 
         {
-            return query.OrderBy(keySelector);
+            return query.OrderByDescending(keySelector);
         }
-        return query.OrderByDescending(keySelector);
+        return query.OrderBy(keySelector);
     }
 }

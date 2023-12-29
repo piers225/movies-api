@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 ServiceCollectionRegistration.Setup(builder.Services);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -27,17 +28,15 @@ else
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             var error = exceptionHandlerPathFeature?.Error;
             var guid = Guid.NewGuid();
-            var message =  $"Unexpected Internal Server Error - {guid}";
-            logger.LogError(error, message);
+            logger.LogError(error, $"Unexpected Internal Server Error - {guid}");
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/html";
-            await context.Response.WriteAsync(message);
+            await context.Response.WriteAsync(guid.ToString());
         });
     });
     app.UseHttpsRedirection();
 }
 
-
-app.MapGet("/api/movies", (IMoviesService movieService, [AsParameters] MovieSearchQuery movieSearchQuery) =>  movieService.SearchMovies(movieSearchQuery));
+app.MapControllers();
 
 app.Run();

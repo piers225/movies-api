@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Movies.DataAccess.DataContext;
 using Movies.DataAccess.DataContext.Repository;
 using Movies.DataAccess.Extensions;
+using Movies.DataAccess.Services.Enum;
 using Movies.DataAccess.Services.Models;
 
 namespace Movies.DataAccess.Services;
@@ -17,14 +18,13 @@ internal class MoviesService : IMoviesService
         this.movieRepository = movieRepository;
     }
 
-    private Expression<Func<Movie, dynamic>> GetSortExpression(ISearchOrder searchOrder)
+    private Expression<Func<Movie, dynamic>> GetSortExpression(MovieSearchQuery searchQuery)
     {
-        return searchOrder.Field?.ToLower() switch
+        return searchQuery.SortField switch
         {
-            "title" => movie => movie.Title, 
-            "releasedate" => movie => movie.ReleaseDate,
-            null => movie => movie.Id,
-            var other => throw new ArgumentException($"Unknown sort field {other}")
+            MovieSearchFields.Title => movie => movie.Title, 
+            MovieSearchFields.ReleaseDate => movie => movie.ReleaseDate,
+            _ => movie => movie.Title
         };
     }
 
