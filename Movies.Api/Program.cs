@@ -11,14 +11,14 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.UseStaticFiles(new StaticFileOptions
+app.UseFileServer(new FileServerOptions
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(Directory.GetCurrentDirectory(), "../Movies.Client")),
-    RequestPath = ""
+    RequestPath = "",
+    EnableDefaultFiles = true
 });
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
