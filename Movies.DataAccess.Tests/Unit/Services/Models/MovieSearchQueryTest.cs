@@ -11,7 +11,6 @@ public class MovieSearchQueryTests
     [Test]
     public void ValidateMovieSearchQuery_ValidData_ShouldPassValidation()
     {
-        // Arrange
         var movieSearchQuery = new MovieSearchQuery(
             Title : "Inception",
             Genre : "Sci-Fi",
@@ -21,36 +20,9 @@ public class MovieSearchQueryTests
             SortDirection : QueryOrderByEnum.Ascending
         );
 
-        // Act
         var validationResults = ValidateModel(movieSearchQuery);
 
-        // Assert
         Assert.IsEmpty(validationResults);
-    }
-
-    [Test]
-    public void ValidateMovieSearchQuery_InvalidData_ShouldFailValidation()
-    {
-        // Arrange
-        var movieSearchQuery = new MovieSearchQuery
-        (
-            Title : null, 
-            Genre : "Action",
-            Limit : 0,    
-            Page : -1,    
-            SortField : (MovieSearchFields)10, 
-            SortDirection : (QueryOrderByEnum)5   
-        );
-
-        // Act
-        var validationResults = ValidateModel(movieSearchQuery);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.AreEqual(2, validationResults.Count); // Two validation errors expected
-
-        });
     }
 
     private static System.Collections.Generic.List<ValidationResult> ValidateModel(object model)

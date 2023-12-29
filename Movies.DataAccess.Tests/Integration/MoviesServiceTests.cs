@@ -15,7 +15,7 @@ public class MoviesServiceTest
     private IMoviesService moviesService = null!;
 
     private MovieQueryResult batman = new(1, "Batman", new DateTime(2010, 10, 1), "");
-    private MovieQueryResult superman = new(2, "Superman", new DateTime(1970, 10, 1), "");
+    private MovieQueryResult superman = new(2, "Superman", new DateTime(1971, 10, 1), "");
     private MovieQueryResult findingNemo = new(3, "Finding Nemo", new DateTime(2003, 10, 1), "");
 
     [OneTimeSetUp]

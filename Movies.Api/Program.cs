@@ -4,7 +4,7 @@ using Movies.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ServiceCollectionRegistration.Setup(builder.Services);
+ServiceCollectionRegistration.Setup(builder.Services, builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -13,8 +13,7 @@ var app = builder.Build();
 
 app.UseFileServer(new FileServerOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "../Movies.Client")),
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), app.Configuration["WWW_ROOT_URI"] ?? "../Movies.Client")),
     RequestPath = "",
     EnableDefaultFiles = true
 });
@@ -34,10 +33,10 @@ else
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             var error = exceptionHandlerPathFeature?.Error;
             var guid = Guid.NewGuid();
-            logger.LogError(error, $"Unexpected Internal Server Error - {guid}");
+            logger.LogError(error, guid.ToString());
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/html";
-            await context.Response.WriteAsync(guid.ToString());
+            await context.Response.WriteAsync($"Unexpected Internal Server Error - {guid}");
         });
     });
     app.UseHttpsRedirection();
