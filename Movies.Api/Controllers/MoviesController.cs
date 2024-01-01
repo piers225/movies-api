@@ -16,10 +16,6 @@ public class MoviesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetMovies([FromQuery] MovieSearchQuery movieSearchQuery)
     {
-        if (ModelState.IsValid == false) 
-        {
-            return BadRequest(ModelState);
-        }
         return Ok(await _movieService.SearchMovies(movieSearchQuery));
     }
 }

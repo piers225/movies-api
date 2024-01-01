@@ -1,4 +1,6 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using Movies.DataAccess;
 
@@ -7,7 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 ServiceCollectionRegistration.Setup(builder.Services, builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var result = new BadRequestObjectResult(context.ModelState);
+            result.ContentTypes.Add(MediaTypeNames.Application.Json);
+            return result;
+        };
+    });
 
 var app = builder.Build();
 
