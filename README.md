@@ -68,7 +68,7 @@ Then you should be able to open [http://localhost:5001](http://localhost:5001)
 
 ## Running the API from a Dev Container
 
-Please follow the setup instructions from, [Visual Code Documentation](https://code.visualstudio.com/docs/devcontainers/containers). You should then be able to start the project inside a dev container. Then from the terminal,
+Please follow the setup instructions from [Visual Code Documentation](https://code.visualstudio.com/docs/devcontainers/containers). You should then be able to start the project inside a dev container. Then from the terminal,
 
 ```bash
 dotnet run --project ./Movies.Api/Movies.Api.csproj
