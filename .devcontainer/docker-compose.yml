@@ -11,6 +11,6 @@ services:
         - ../:/app
       environment:
         - TZ=UTC
-        - WWW_ROOT_URI=../Movies.Client
+        - WWW_ROOT_PATH=../Movies.Client
         - DATABASE_PATH=../Movies.DataAccess/Database
       tty: true

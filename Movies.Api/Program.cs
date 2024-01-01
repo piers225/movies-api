@@ -13,7 +13,7 @@ var app = builder.Build();
 
 app.UseFileServer(new FileServerOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), app.Configuration["WWW_ROOT_URI"] ?? "../Movies.Client")),
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), app.Configuration["WWW_ROOT_PATH"] ?? "../Movies.Client")),
     RequestPath = "",
     EnableDefaultFiles = true
 });
