@@ -56,10 +56,12 @@ Sort the movies by release date in descending order.
 
 This requires the .NET CORE 8.0 SDK to be installed locally.
 
+For macOS/Linux:
 ```bash
 dotnet run --project ./Movies.Api/Movies.Api.csproj
 ```
 
+For Windows
 ```command line
 dotnet run --project .\Movies.Api\Movies.Api.csproj
 ```
@@ -70,6 +72,7 @@ Then you should be able to open [http://localhost:5001](http://localhost:5001)
 
 Please follow the setup instructions from [Visual Code Documentation](https://code.visualstudio.com/docs/devcontainers/containers). You should then be able to start the project inside a dev container. Then from the terminal,
 
+For Linux:
 ```bash
 dotnet run --project ./Movies.Api/Movies.Api.csproj
 ```
