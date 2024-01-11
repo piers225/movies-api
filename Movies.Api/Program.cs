@@ -7,6 +7,7 @@ using Movies.DataAccess;
 var builder = WebApplication.CreateBuilder(args);
 
 ServiceCollectionRegistration.Setup(builder.Services, builder.Configuration);
+builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers()
@@ -54,5 +55,7 @@ else
 }
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();
